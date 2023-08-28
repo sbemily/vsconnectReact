@@ -22,18 +22,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import secureLocalStorage from 'react-secure-storage';
 
 function logado() {
-  
   if (secureLocalStorage.getItem("user")) {
     const objetoUsuario: any = secureLocalStorage.getItem("user");
 
-    const nome: string = objetoUsuario.user.nome.trim().split(" ")[0]
+    const nome: string = objetoUsuario.user.nome.trim().split(" ")[0];
+
+    return { logado: true, nomeUsuario: nome }
+  }
+  else {
+    return { logado: false, nomeUsuario: null }
   }
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter> {/*Indica que aplicação terá rotas*/}
-      <Header />
+      <Header usuario={logado()}/>
       <Routes>{/*Indica uma lista de rotas*/}
         <Route path='/' element={<Home />} /> {/*Indica o caminho do componente e o nome da rota dele*/}
         <Route path='lista/servicos' element={<ListaServicos />} />
